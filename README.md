@@ -14,20 +14,26 @@
 $ composer require offdev/csv
 ```
 
-## Usage
+## Introduction
 
-### Streams
+This parser has been written, in order to parser big CSV files from almost any data source in an easy and convenient way. It also provides the possibility to validate each record from the CSV source.
+
+In order for the parser to work, you need to feed it with data. This data will be represented as a stream. This allows us to handle huge amounts of data. The parser can also work with HTTP streams.
+
+Please read further to see how it is used.
+
+## Streams
 
 In order to feed the parser with data, you need to give it a stream. A stream can be obtained in a different number of ways:
 
-#### Using resources
+### Using resources
 ```php
 use Offdev\Csv\Stream;
 
 $stream = Stream::factory(fopen('/path/to/file.csv', 'r'));
 ```
 
-#### Using strings
+### Using strings
 ```php
 use Offdev\Csv\Stream;
 
@@ -35,7 +41,7 @@ $stream = Stream::factory('this string will be transformed to an in-memory strea
 ```
 Note: this method also works for any object which implements the ```__toString``` method.
 
-#### Using HTTP streams (see [PSR-7/Streams](https://www.php-fig.org/psr/psr-7/#13-streams))
+### Using HTTP streams (see [PSR-7/Streams](https://www.php-fig.org/psr/psr-7/#13-streams))
 ```php
 use GuzzleHttp\Client;
 use Offdev\Csv\Stream;
@@ -45,7 +51,7 @@ $response = $client->get('http://httpbin.org/get');
 $stream = Stream::factory($response->getBody());
 ```
 
-#### Convenience
+### Convenience
 
 If you want to quickly create a stream, you can use the provided helper function. You need to use composer's autoloader to be able to use this.
 
@@ -66,9 +72,9 @@ class Example
 $objectToStringStream = stream(new Example());
 ```
 
-### Parser
+## Parser
 
-#### Basics
+### Basics
 Once the parser has a stream to work with, we can start using it:
 ```php
 use Offdev\Csv\Parser;
@@ -99,7 +105,7 @@ foreach ($parser as $index => $record) {
 
 This will produce the same output as the example above.
 
-#### Options
+### Options
 
 The parser accepts a number of options. The parser accepts options in an array, which is passed a a second argument to the constructor:
 ```php
@@ -118,7 +124,7 @@ Full list of options:
 | ```Parser::OPTION_EOL```       | \<string>  | ```"\n"```    | Defines the line ending used in the CSV file. Unix files mostly use ```\n``` while windows mostly uses ```\r\n```.    | 
 | ```Parser::OPTION_THROWS```    | \<boolean> | ```true```    | Tells the parser to throw an exception when an invalid records was found in the stream.                               | 
 
-### Processor
+## Processor
 
 For better usability and separation of concerns, the parser accepts a processor, which will receive any parsed records from the stream. Records are represented as [Laravel collections](https://laravel.com/docs/5.6/collections).
 
@@ -177,7 +183,7 @@ Got item: Robert
 ---EOF---
 ```
 
-### Validator
+## Validator
 
 Now, most of the times, we want to make sure the data contained in the CSV is in a given format. This package uses the Laravel validation package in order to provide a rule engine for the content of the CSV. A full list of all rules can be found [here](https://laravel.com/docs/5.7/validation#available-validation-rules).
 

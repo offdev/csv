@@ -240,7 +240,13 @@ final class ParserTest extends TestCase
     public function testIteratorHasNumericIndex()
     {
         $stream = stream(__DIR__.'/data/other-samples.csv');
+        $validator = new Validator([
+            'column1' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
+            'column2' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
+            'column3' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
+        ]);
         $parser = new Parser($stream, [Parser::OPTION_THROWS => false]);
+        $parser->setValidator($validator);
         $result = new Collection();
         foreach ($parser as $index => $line) {
             $result[$index] = $line;
@@ -249,5 +255,9 @@ final class ParserTest extends TestCase
         $this->assertInstanceOf(Item::class, $result->get(0));
         $this->assertInstanceOf(Item::class, $result->get(1));
         $this->assertInstanceOf(Item::class, $result->get(2));
+
+        $this->assertTrue($result->get(0)->isValid());
+        $this->assertFalse($result->get(1)->isValid());
+        $this->assertTrue($result->get(2)->isValid());
     }
 }

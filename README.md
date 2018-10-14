@@ -5,29 +5,29 @@
 [![Build Status](https://img.shields.io/travis/offdev/csv/master.svg?style=flat-square)](https://travis-ci.org/offdev/csv)
 [![License](https://img.shields.io/github/license/offdev/csv.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-### Requirements
+## Requirements
 * PHP >= 7.2
 * Composer
 
-### Installation
+## Installation
 ```bash
 $ composer require offdev/csv
 ```
 
-### Usage
+## Usage
 
-#### Streams
+### Streams
 
 In order to feed the parser with data, you need to give it a stream. A stream can be obtained in a different number of ways:
 
-##### Using resources
+#### Using resources
 ```php
 use Offdev\Csv\Stream;
 
 $stream = Stream::factory(fopen('/path/to/file.csv', 'r'));
 ```
 
-##### Using strings
+#### Using strings
 ```php
 use Offdev\Csv\Stream;
 
@@ -35,7 +35,7 @@ $stream = Stream::factory('this string will be transformed to an in-memory strea
 ```
 Note: this method also works for any object which implements the ```__toString``` method.
 
-##### Using HTTP streams (see [PSR-7/Streams](https://www.php-fig.org/psr/psr-7/#13-streams))
+#### Using HTTP streams (see [PSR-7/Streams](https://www.php-fig.org/psr/psr-7/#13-streams))
 ```php
 use GuzzleHttp\Client;
 use Offdev\Csv\Stream;
@@ -45,9 +45,9 @@ $response = $client->get('http://httpbin.org/get');
 $stream = Stream::factory($response->getBody());
 ```
 
-#### Parser
+### Parser
 
-##### Basics
+#### Basics
 Once the parser has a stream to work with, we can start using it:
 ```php
 use Offdev\Csv\Parser;
@@ -78,7 +78,7 @@ foreach ($parser as $index => $record) {
 
 This will produce the same output as the example above.
 
-##### Options
+#### Options
 
 The parser accepts a number of options. The parser accepts options in an array, which is passed a a second argument to the constructor:
 ```php
@@ -97,7 +97,7 @@ Full list of options:
 | ```Parser::OPTION_EOL```       | \<string>  | ```"\n"```    | Defines the line ending used in the CSV file. Unix files mostly use ```\n``` while windows mostly uses ```\r\n```.    | 
 | ```Parser::OPTION_THROWS```    | \<boolean> | ```true```    | Tells the parser to throw an exception when an invalid records was found in the stream.                               | 
 
-#### Processor
+### Processor
 
 For better usability and separation of concerns, the parser accepts a processor, which will receive any parsed records from the stream. Records are represented as [Laravel collections](https://laravel.com/docs/5.6/collections).
 
@@ -156,7 +156,7 @@ Got item: Robert
 ---EOF---
 ```
 
-#### Validator
+### Validator
 
 Now, most of the times, we want to make sure the data contained in the CSV is in a given format. This package uses the Laravel validation package in order to provide a rule engine for the content of the CSV. A full list of all rules can be found [here](https://laravel.com/docs/5.7/validation#available-validation-rules).
 
@@ -181,8 +181,7 @@ try {
 }
 ```
 
-### Code quality
-##### Who the fuck needs that anyways?
+## Code quality
 
 First, make sure to install the dependencies by running ```composer install```. You also need to make sure to have xdebug activated in order for PHPUnit to generate the code coverage.
 

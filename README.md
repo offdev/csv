@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/github/license/offdev/csv.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 ### Requirements
-* PHP >= 7.1
+* PHP >= 7.2
 * Composer
 
 ### Installation

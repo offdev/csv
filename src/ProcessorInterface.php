@@ -11,8 +11,6 @@
 
 namespace Offdev\Csv;
 
-use Illuminate\Support\Collection;
-
 /**
  * Interface ProcessorInterface
  * @package Offdev\CsvParser
@@ -20,14 +18,14 @@ use Illuminate\Support\Collection;
 interface ProcessorInterface
 {
     /**
-     * @param Collection $record
+     * @param Item $record
      */
-    public function processRecord(Collection $record): void;
+    public function processRecord(Item $record): void;
 
     /**
-     * @param Collection $record
+     * @param Item $record
      */
-    public function processInvalidRecord(Collection $record): void;
+    public function processInvalidRecord(Item $record): void;
 
     /**
      * Called when the parser hit the end of the stream.

@@ -11,14 +11,13 @@
 
 namespace Offdev\Csv;
 
-use Illuminate\Support\Collection;
 use Psr\Http\Message\StreamInterface;
 
 /**
  * Interface ParserInterface
  * @package Offdev\CsvParser
  */
-interface ParserInterface
+interface ParserInterface extends \Iterator
 {
     /**
      * Controls the buffer size when reading the stream
@@ -92,7 +91,7 @@ interface ParserInterface
      * Reads a line from the stream, and puts it in a collection
      * for further manipulation.
      *
-     * @return Collection|false
+     * @return Item|false
      */
     public function readLine();
 

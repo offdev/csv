@@ -13,22 +13,30 @@ declare(strict_types=1);
 namespace Offdev\Tests;
 
 use Offdev\Csv\Item;
-use Offdev\Csv\Validator;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class ValidatorTest
  * @package Offdev\Tests
  */
-final class ValidatorTest extends TestCase
+final class ItemTest extends TestCase
 {
     /**
      * Makes sure the response doesn't get modified whe no middleware ws given
      */
-    public function testWorks(): void
+    public function testDefaultItemIsValid(): void
     {
-        $validator = new Validator(['required|string|min:2']);
-        $result = $validator->isValid(new Item('string'));
-        $this->assertTrue($result);
+        $item = new Item();
+        $this->assertTrue($item->isValid());
+    }
+
+    /**
+     * Makes sure the response doesn't get modified whe no middleware ws given
+     */
+    public function testSetterWorks(): void
+    {
+        $item = new Item();
+        $item->setIsValid(false);
+        $this->assertFalse($item->isValid());
     }
 }

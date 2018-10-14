@@ -11,7 +11,6 @@
 
 namespace Offdev\Csv;
 
-use Illuminate\Support\Collection;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -52,6 +51,12 @@ class Parser implements ParserInterface
 
     /** @var bool */
     private $throws = true;
+
+    /** @var Item|false */
+    private $currentLine = false;
+
+    /** @var int */
+    private $iteratorIndex = 0;
 
     /**
      * Wraps around a stream, and acceps options
@@ -102,7 +107,57 @@ class Parser implements ParserInterface
     public function rewind(): ParserInterface
     {
         $this->stream->rewind();
+        $this->currentLine = false;
         return $this;
+    }
+
+    /**
+     * Return the current element
+     * @link https://php.net/manual/en/iterator.current.php
+     * @return mixed Can return any type.
+     * @since 5.0.0
+     */
+    public function current()
+    {
+        if (!$this->currentLine && !$this->eof()) {
+            $this->currentLine = $this->readLine();
+        }
+        return $this->currentLine;
+    }
+
+    /**
+     * Move forward to next element
+     * @link https://php.net/manual/en/iterator.next.php
+     * @return void Any returned value is ignored.
+     * @since 5.0.0
+     */
+    public function next()
+    {
+        $this->currentLine = $this->readLine();
+        $this->iteratorIndex++;
+    }
+
+    /**
+     * Return the key of the current element
+     * @link https://php.net/manual/en/iterator.key.php
+     * @return mixed scalar on success, or null on failure.
+     * @since 5.0.0
+     */
+    public function key()
+    {
+        return $this->iteratorIndex;
+    }
+
+    /**
+     * Checks if current position is valid
+     * @link https://php.net/manual/en/iterator.valid.php
+     * @return boolean The return value will be casted to boolean and then evaluated.
+     * Returns true on success or false on failure.
+     * @since 5.0.0
+     */
+    public function valid()
+    {
+        return !$this->eof();
     }
 
     /**
@@ -111,7 +166,7 @@ class Parser implements ParserInterface
      * Reads a string from the stream, up to the defined delimiter. Empty lines
      * are skipped. Headers are read automatically, if tge option was set.
      *
-     * @return Collection|false
+     * @return Item|false
      */
     public function readLine()
     {
@@ -201,11 +256,11 @@ class Parser implements ParserInterface
      * is then passed to the underlying processor for further manipulation.
      *
      * @param string $line
-     * @return Collection|false
+     * @return Item|false
      */
     private function parseLine($line)
     {
-        $record = $this->getCollection($line);
+        $record = $this->getItem($line);
         if (!$record) {
             return false;
         }
@@ -227,9 +282,9 @@ class Parser implements ParserInterface
      * Builds a collection from a string
      *
      * @param string|false $line
-     * @return Collection|false
+     * @return Item|false
      */
-    private function getCollection($line)
+    private function getItem($line)
     {
         if (!is_string($line)) {
             return $line;
@@ -240,11 +295,11 @@ class Parser implements ParserInterface
                 if ($this->throws) {
                     throw new \RuntimeException('Invalid item count in stream!');
                 }
-                return $this->getCollection($this->readLineFromBuffer());
+                return $this->getItem($this->readLineFromBuffer());
             }
-            $record = collect(array_combine($this->header, $result));
+            $record = new Item(array_combine($this->header, $result));
         } else {
-            $record = collect($result);
+            $record = new Item($result);
         }
 
         return $record;
@@ -255,9 +310,9 @@ class Parser implements ParserInterface
      *
      * Also passes failed results to the processor, if no validator was assigned.
      *
-     * @param Collection $record
+     * @param Item $record
      */
-    private function parseSuccess(Collection $record): void
+    private function parseSuccess(Item $record): void
     {
         if ($this->processor instanceof ProcessorInterface) {
             $this->processor->processRecord($record);
@@ -267,9 +322,9 @@ class Parser implements ParserInterface
     /**
      * Passes a failed result to the underlying processor
      *
-     * @param Collection $record
+     * @param Item $record
      */
-    private function parseFailed(Collection $record): void
+    private function parseFailed(Item $record): void
     {
         if ($this->throws) {
             throw new \RuntimeException('Invalid record found in stream!');

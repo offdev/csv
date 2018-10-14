@@ -58,8 +58,8 @@ class Stream implements StreamInterface
     ];
 
     /**
-     * @param string $resource
-     * @return Stream|string
+     * @param string|resource|object $resource
+     * @return Stream
      * @throws \InvalidArgumentException
      */
     public static function factory($resource = '')

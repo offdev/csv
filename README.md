@@ -115,18 +115,18 @@ Example processor:
 
 namespace MyCompany\ProjectX\Processors;
 
-use Illuminate\Support\Collection;
+use Offdev\Csv\Item;
 use Offdev\Csv\ProcessorInterface;
 
 class MyProcessor implements ProcessorInterface
 {
-    public function processRecord(Collection $record): void
+    public function processRecord(Item $record): void
     {
         // No header in CSV, use numeric index
         echo "Got item: ".$record->get(1).PHP_EOL;
     }
     
-    public function processInvalidRecord(Collection $record): void
+    public function processInvalidRecord(Item $record): void
     {
         $this->processRecord($record);
     }

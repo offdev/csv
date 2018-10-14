@@ -12,7 +12,6 @@
 namespace Offdev\Csv;
 
 use Illuminate\Contracts\Translation\Translator;
-use Illuminate\Support\Collection;
 use Illuminate\Validation\Validator as ActualValidator;
 
 /**
@@ -34,10 +33,10 @@ class Validator
     }
 
     /**
-     * @param Collection $data
+     * @param Item $data
      * @return bool
      */
-    public function isValid(Collection $data): bool
+    public function isValid(Item $data): bool
     {
         return (new ActualValidator(
             $this->getTranslator(),

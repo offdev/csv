@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Offdev\Tests;
 
 use Illuminate\Support\Collection;
+use Offdev\Csv\Item;
 use Offdev\Csv\Parser;
 use Offdev\Csv\Stream;
 use Offdev\Csv\Validator;
@@ -31,7 +32,7 @@ final class ParserTest extends TestCase
             Parser::OPTION_THROWS => false,
             Parser::OPTION_BUFSIZE => 225
         ]);
-        /** @var Collection[] $result */
+        /** @var Item[] $result */
         $result = [];
         do {
             $result[] = $parser->readLine();
@@ -210,5 +211,42 @@ final class ParserTest extends TestCase
         $this->assertEquals(2, $processor->getValidRecords()->count());
         $this->assertEquals('row-1/column-3', $processor->getValidRecords()->get(0)->get('column3'));
         $this->assertEquals(1, $processor->getInvalidRecords()->count());
+    }
+
+    public function testParserWorksAsIterator()
+    {
+        $stream = new Stream(fopen(__DIR__.'/data/other-samples.csv', 'r'));
+        $parser = new Parser($stream, [Parser::OPTION_THROWS => false]);
+        $result = new Collection();
+        foreach ($parser as $line) {
+            $result[] = $line;
+        }
+        $this->assertEquals(3, $result->count());
+    }
+
+    public function testIteratorRewindsStream()
+    {
+        $stream = new Stream(fopen(__DIR__.'/data/other-samples.csv', 'r'));
+        $parser = new Parser($stream, [Parser::OPTION_THROWS => false]);
+        $result = new Collection();
+        $stream->seek(0, SEEK_END);
+        foreach ($parser as $index => $line) {
+            $result[$index] = $line;
+        }
+        $this->assertEquals(3, $result->count());
+    }
+
+    public function testIteratorHasNumericIndex()
+    {
+        $stream = new Stream(fopen(__DIR__.'/data/other-samples.csv', 'r'));
+        $parser = new Parser($stream, [Parser::OPTION_THROWS => false]);
+        $result = new Collection();
+        foreach ($parser as $index => $line) {
+            $result[$index] = $line;
+        }
+        $this->assertEquals(3, $result->count());
+        $this->assertInstanceOf(Item::class, $result->get(0));
+        $this->assertInstanceOf(Item::class, $result->get(1));
+        $this->assertInstanceOf(Item::class, $result->get(2));
     }
 }

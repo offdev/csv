@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Offdev\Tests;
 
 use Illuminate\Support\Collection;
+use Offdev\Csv\Item;
 use Offdev\Csv\ProcessorInterface;
 
 /**
@@ -55,17 +56,17 @@ class TestProcessor implements ProcessorInterface
     }
 
     /**
-     * @param Collection $record
+     * @param Item $record
      */
-    public function processRecord(Collection $record): void
+    public function processRecord(Item $record): void
     {
         $this->validRecords[] = $record;
     }
 
     /**
-     * @param Collection $record
+     * @param Item $record
      */
-    public function processInvalidRecord(Collection $record): void
+    public function processInvalidRecord(Item $record): void
     {
         $this->invalidRecords[] = $record;
     }

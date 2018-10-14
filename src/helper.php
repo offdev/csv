@@ -17,7 +17,8 @@ if (!function_exists('stream')) {
      * @param object|resource|string $input
      * @return \Offdev\Csv\Stream
      */
-    function stream($input = '') {
+    function stream($input = '')
+    {
         if (is_string($input) && file_exists($input) && is_readable($input)) {
             return \Offdev\Csv\Stream::factory(fopen($input, 'r'));
         }

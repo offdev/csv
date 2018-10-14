@@ -210,7 +210,9 @@ final class ParserTest extends TestCase
 
         $this->assertEquals(2, $processor->getValidRecords()->count());
         $this->assertEquals('row-1/column-3', $processor->getValidRecords()->get(0)->get('column3'));
+        $this->assertTrue($processor->getValidRecords()->get(0)->isValid());
         $this->assertEquals(1, $processor->getInvalidRecords()->count());
+        $this->assertFalse($processor->getInvalidRecords()->get(0)->isValid());
     }
 
     public function testParserWorksAsIterator()

@@ -77,6 +77,23 @@ row1-value2
 row2-value2
 ```
 
+For convenience, the parser can also be used as an iterator:
+
+```php
+<?php
+
+use Offdev\Csv\Parser;
+use Offdev\Csv\Stream;
+
+$stream = Stream::factory("header-column1,header-column2\nrow1-value1,row1-value2\nrow2-value1,row2-value2");
+$parser = new Parser($stream);
+foreach ($parser as $index => $record) {
+    echo $record->get('header-column2').PHP_EOL;
+} 
+```
+
+This will produce the same output as the example above.
+
 ##### Options
 
 The parser accepts a number of options. The parser accepts options in an array, which is passed a a second argument to the constructor:

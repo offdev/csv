@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - ```ParserInterface``` now implements the ```Iterator``` interface, for easy iterations over a CSV stream
 - New class ```Item``` which extends Laravel's ```Collection``` class, and adds an ```isValid``` method, which returns a validation result if the parser was given a validator
+- New convenience helper function to create streams: ```stream($input)```
 
 ## [1.0.1] - 2018-10-14
 ### Removed

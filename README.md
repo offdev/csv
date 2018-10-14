@@ -45,6 +45,27 @@ $response = $client->get('http://httpbin.org/get');
 $stream = Stream::factory($response->getBody());
 ```
 
+#### Convenience
+
+If you want to quickly create a stream, you can use the provided helper function. You need to use composer's autoloader to be able to use this.
+
+```php
+// Recognizes files, and opens them in read mode
+$fileStream = stream('/tmp/results.csv');
+
+// Create from string
+$stringStream = stream('stream content');
+
+// From objcets, which implement the __toString method
+class Example
+{
+    public function __toString(){
+     return 'some example';
+    }
+}
+$objectToStringStream = stream(new Example());
+```
+
 ### Parser
 
 #### Basics

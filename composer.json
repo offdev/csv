@@ -21,6 +21,9 @@
         "squizlabs/php_codesniffer": "^3.0"
     },
     "autoload": {
+        "files": [
+            "src/helper.php"
+        ],
         "psr-4": {
             "Offdev\\Csv\\": "src/"
         }

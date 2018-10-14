@@ -23,20 +23,20 @@ final class StreamTest extends TestCase
 {
     public function testFactoryWorksWithString(): void
     {
-        $stream = Stream::factory('some stream');
+        $stream = stream('some stream');
         $this->assertEquals('some stream', (string)$stream);
     }
 
     public function testFactoryWorksWithResource(): void
     {
-        $stream = Stream::factory(fopen(__DIR__ . '/data/samples.csv', 'r'));
+        $stream = stream(fopen(__DIR__ . '/data/samples.csv', 'r'));
         $this->assertEquals(225, strlen((string)$stream));
     }
 
     public function testFactoryWorksWithStreamInterface(): void
     {
-        $stream = Stream::factory('lol');
-        $stream = Stream::factory($stream);
+        $stream = stream('lol');
+        $stream = stream($stream);
         $this->assertEquals('lol', (string)$stream);
     }
 
@@ -48,7 +48,7 @@ final class StreamTest extends TestCase
                 return 'magic objects are fun!';
             }
         };
-        $stream = Stream::factory($obj);
+        $stream = stream($obj);
         $this->assertEquals('magic objects are fun!', (string)$stream);
     }
 
@@ -59,7 +59,7 @@ final class StreamTest extends TestCase
     public function testFactoryWithInvalidObjectThrows(): void
     {
         $obj = new \stdClass();
-        Stream::factory($obj);
+        stream($obj);
     }
 
     /**
@@ -68,7 +68,7 @@ final class StreamTest extends TestCase
      */
     public function testFactoryThrowsWithInvalidResource(): void
     {
-        Stream::factory(1);
+        stream(1);
     }
 
     /**
@@ -77,32 +77,32 @@ final class StreamTest extends TestCase
      */
     public function testInstantiationThrowsIfNoResourceWasGiven(): void
     {
-        $stream = new Stream(1);
+        new Stream(1);
     }
 
     public function testDetachedStreamReturnsEmptryString(): void
     {
-        $stream = Stream::factory('LOL');
+        $stream = stream('LOL');
         $stream->__destruct();
         $this->assertEquals('', (string)$stream);
     }
 
     public function testDetachedStreamHasNoSize(): void
     {
-        $stream = Stream::factory('LOL');
+        $stream = stream('LOL');
         $stream->close();
         $this->assertNull($stream->getSize());
     }
 
     public function testStreamReturnsCorrectSize(): void
     {
-        $stream = Stream::factory('LOL');
+        $stream = stream('LOL');
         $this->assertEquals(3, $stream->getSize());
     }
 
     public function testTellWorks(): void
     {
-        $stream = Stream::factory('LOL');
+        $stream = stream('LOL');
         $this->assertEquals(0, $stream->tell());
         $string = (string)$stream;
         $this->assertEquals(3, $stream->tell());
@@ -110,7 +110,7 @@ final class StreamTest extends TestCase
 
     public function testEofWorks(): void
     {
-        $stream = Stream::factory('LOL');
+        $stream = stream('LOL');
         $this->assertFalse($stream->eof());
         $string = (string)$stream;
         $this->assertTrue($stream->eof());
@@ -118,25 +118,25 @@ final class StreamTest extends TestCase
 
     public function testIsSeekableWorks(): void
     {
-        $stream = Stream::factory('LOL');
+        $stream = stream('LOL');
         $this->assertTrue($stream->isSeekable());
     }
 
     public function testIsReadableWorks(): void
     {
-        $stream = Stream::factory('LOL');
+        $stream = stream('LOL');
         $this->assertTrue($stream->isReadable());
     }
 
     public function testIsWritableWorks(): void
     {
-        $stream = Stream::factory('LOL');
+        $stream = stream('LOL');
         $this->assertTrue($stream->isWritable());
     }
 
     public function testRewindWorks(): void
     {
-        $stream = Stream::factory('LOL');
+        $stream = stream('LOL');
         $this->assertEquals(0, $stream->tell());
         $string = (string)$stream;
         $this->assertEquals(3, $stream->tell());
@@ -146,7 +146,7 @@ final class StreamTest extends TestCase
 
     public function testWritingWorks(): void
     {
-        $stream = Stream::factory('LOL');
+        $stream = stream('LOL');
         $stream->seek(0, SEEK_END);
         $stream->write('-rofl');
         $this->assertEquals('LOL-rofl', (string)$stream);
@@ -158,14 +158,14 @@ final class StreamTest extends TestCase
      */
     public function testNonWritableStreamThrowsOnWrite(): void
     {
-        $stream = Stream::factory(fopen(__DIR__ . '/data/samples.csv', 'r'));
+        $stream = stream(fopen(__DIR__ . '/data/samples.csv', 'r'));
         $stream->seek(0, SEEK_END);
         $stream->write('-rofl');
     }
 
     public function testGetMetaDataWorks(): void
     {
-        $stream = Stream::factory('hahahaha');
+        $stream = stream('hahahaha');
         $meta = $stream->getMetadata();
         $this->assertArrayHasKey('wrapper_type', $meta);
         $this->assertArrayHasKey('stream_type', $meta);
@@ -177,31 +177,31 @@ final class StreamTest extends TestCase
 
     public function testGetMetaDataWithKeyWorks(): void
     {
-        $stream = Stream::factory('hahahaha');
+        $stream = stream('hahahaha');
         $this->assertEquals('TEMP', $stream->getMetadata('stream_type'));
     }
 
     public function testReadWorks(): void
     {
-        $stream = Stream::factory('hahahaha');
+        $stream = stream('hahahaha');
         $this->assertEquals('hahahaha', $stream->read(8));
     }
 
     public function testReadUnreadableReturnsFalse(): void
     {
-        $stream = Stream::factory();
+        $stream = stream();
         $this->assertEquals(false, $stream->read(1));
     }
 
     public function testReadOnNonReadableReturnsFalse(): void
     {
-        $stream = Stream::factory(fopen(__DIR__ . '/data/samples.csv', 'a'));
+        $stream = stream(fopen(__DIR__ . '/data/samples.csv', 'a'));
         $this->assertFalse($stream->read(1));
     }
 
     public function testDetachedStreamNotReadable(): void
     {
-        $stream = Stream::factory('lol');
+        $stream = stream('lol');
         $res = $stream->detach();
         $this->assertFalse($stream->isReadable());
         $this->assertFalse($stream->tell());
@@ -210,7 +210,7 @@ final class StreamTest extends TestCase
 
     public function testWriteEmptyStringReturnsZeroBytesWritten(): void
     {
-        $stream = Stream::factory('lol');
+        $stream = stream('lol');
         $bytes = $stream->write('');
         $this->assertEquals(0, $bytes);
     }

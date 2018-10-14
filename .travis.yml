@@ -1,7 +1,6 @@
 # Basic config
 language: php
 php:
-- '7.1'
 - '7.2'
 
 # Composer dependencies and autoloading

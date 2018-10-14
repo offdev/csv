@@ -114,7 +114,7 @@ class Parser implements ParserInterface
     /**
      * Return the current element
      * @link https://php.net/manual/en/iterator.current.php
-     * @return mixed Can return any type.
+     * @return Item Can return any type.
      * @since 5.0.0
      */
     public function current()
@@ -140,7 +140,7 @@ class Parser implements ParserInterface
     /**
      * Return the key of the current element
      * @link https://php.net/manual/en/iterator.key.php
-     * @return mixed scalar on success, or null on failure.
+     * @return int scalar on success, or null on failure.
      * @since 5.0.0
      */
     public function key()

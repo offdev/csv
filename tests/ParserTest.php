@@ -15,7 +15,6 @@ namespace Offdev\Tests;
 use Illuminate\Support\Collection;
 use Offdev\Csv\Item;
 use Offdev\Csv\Parser;
-use Offdev\Csv\Stream;
 use Offdev\Csv\Validator;
 use PHPUnit\Framework\TestCase;
 
@@ -27,7 +26,7 @@ final class ParserTest extends TestCase
 {
     public function testReadLineWorks(): void
     {
-        $stream = stream(__DIR__ . '/data/samples.csv', 'r');
+        $stream = stream(__DIR__ . '/data/samples.csv');
         $parser = new Parser($stream, [
             Parser::OPTION_THROWS => false,
             Parser::OPTION_BUFSIZE => 225
@@ -47,7 +46,7 @@ final class ParserTest extends TestCase
      */
     public function testReadLineThrowsOnInvaldRecords(): void
     {
-        $stream = stream(__DIR__ . '/data/samples.csv', 'r');
+        $stream = stream(__DIR__ . '/data/samples.csv');
         $parser = new Parser($stream);
         $result = [];
         do {
@@ -61,7 +60,7 @@ final class ParserTest extends TestCase
      */
     public function testTooTinyBufferSizeThrowsOnRead(): void
     {
-        $stream = stream(__DIR__ . '/data/samples.csv', 'r');
+        $stream = stream(__DIR__ . '/data/samples.csv');
         $parser = new Parser($stream, [Parser::OPTION_BUFSIZE => 1]);
         $parser->readLine();
     }
@@ -95,7 +94,7 @@ final class ParserTest extends TestCase
             'column2' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
             'column3' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
         ]);
-        $stream = stream(__DIR__ . '/data/samples.csv', 'r');
+        $stream = stream(__DIR__ . '/data/samples.csv');
         $parser = new Parser($stream, [
             Parser::OPTION_THROWS => false,
             Parser::OPTION_BUFSIZE => 45
@@ -112,7 +111,7 @@ final class ParserTest extends TestCase
     public function testParserIgnoresEmptyLines()
     {
         $processor = new TestProcessor();
-        $stream = stream(__DIR__ . '/data/samples.csv', 'r');
+        $stream = stream(__DIR__ . '/data/samples.csv');
         $parser = new Parser($stream, [
             Parser::OPTION_THROWS => false,
             Parser::OPTION_BUFSIZE => 45
@@ -135,7 +134,7 @@ final class ParserTest extends TestCase
             'column2' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
             'column3' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
         ]);
-        $stream = stream(__DIR__ . '/data/samples.csv', 'r');
+        $stream = stream(__DIR__ . '/data/samples.csv');
         $parser = new Parser($stream);
         $parser->setProcessor($processor);
         $parser->setValidator($validator);
@@ -165,7 +164,7 @@ final class ParserTest extends TestCase
             'column2' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
             'column3' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
         ]);
-        $stream = stream(__DIR__ . '/data/samples.csv', 'r');
+        $stream = stream(__DIR__ . '/data/samples.csv');
         $parser = new Parser($stream);
         $parser->setProcessor($processor);
         $parser->setValidator($validator);
@@ -184,7 +183,7 @@ final class ParserTest extends TestCase
             'column2' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
             'column3' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
         ]);
-        $stream = stream(__DIR__.'/data/other-samples.csv', 'r');
+        $stream = stream(__DIR__.'/data/other-samples.csv');
         $parser = new Parser($stream);
         $parser->setProcessor($processor);
         $parser->setValidator($validator);
@@ -199,7 +198,7 @@ final class ParserTest extends TestCase
             'column2' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
             'column3' => 'required|string|min:14|max:14|regex:/^row-\d\/column-\d$/i',
         ]);
-        $stream = stream(__DIR__.'/data/other-samples.csv', 'r');
+        $stream = stream(__DIR__.'/data/other-samples.csv');
         $parser = new Parser($stream, [
             Parser::OPTION_THROWS => false
         ]);
@@ -217,7 +216,7 @@ final class ParserTest extends TestCase
 
     public function testParserWorksAsIterator()
     {
-        $stream = stream(__DIR__.'/data/other-samples.csv', 'r');
+        $stream = stream(__DIR__.'/data/other-samples.csv');
         $parser = new Parser($stream, [Parser::OPTION_THROWS => false]);
         $result = new Collection();
         foreach ($parser as $line) {
@@ -228,7 +227,7 @@ final class ParserTest extends TestCase
 
     public function testIteratorRewindsStream()
     {
-        $stream = stream(__DIR__.'/data/other-samples.csv', 'r');
+        $stream = stream(__DIR__.'/data/other-samples.csv');
         $parser = new Parser($stream, [Parser::OPTION_THROWS => false]);
         $result = new Collection();
         $stream->seek(0, SEEK_END);
@@ -240,7 +239,7 @@ final class ParserTest extends TestCase
 
     public function testIteratorHasNumericIndex()
     {
-        $stream = stream(__DIR__.'/data/other-samples.csv', 'r');
+        $stream = stream(__DIR__.'/data/other-samples.csv');
         $parser = new Parser($stream, [Parser::OPTION_THROWS => false]);
         $result = new Collection();
         foreach ($parser as $index => $line) {

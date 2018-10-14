@@ -1,0 +1,57 @@
+{
+  "source": {
+    "directories": [
+      "src"
+    ]
+  },
+  "logs": {
+    "text": "reports/infection.log",
+    "summary": "reports/infecrtion-summary.log",
+    "debug": "reports/infection-debug.log",
+    "badge": {
+      "branch": "master"
+    }
+  },
+  "timeout": 10,
+  "mutators": {
+    "@default": true,
+    "@function_signature": false,
+    "DecrementInteger": {
+      "ignore": [
+        "Offdev\\Csv\\Parser::buffer",
+        "Offdev\\Csv\\Parser::parseOptions",
+        "Offdev\\Csv\\Stream::rewind"
+      ]
+    },
+    "FunctionCallRemoval": {
+      "ignore": [
+        "Offdev\\Csv\\Stream::close"
+      ]
+    },
+    "GreaterThan": {
+      "ignore": [
+        "Offdev\\Csv\\Parser::buffer"
+      ]
+    },
+    "IncrementInteger": {
+      "ignore": [
+        "Offdev\\Csv\\Parser::parseOptions"
+      ]
+    },
+    "MethodCallRemoval": {
+      "ignore": [
+        "Offdev\\Csv\\Parser::run"
+      ]
+    },
+    "Minus": {
+      "ignore": [
+        "Offdev\\Csv\\Parser::buffer"
+      ]
+    },
+    "Throw_": {
+      "ignore": [
+        "Offdev\\Csv\\Parser::readLineFromBuffer"
+      ]
+    }
+  }
+}

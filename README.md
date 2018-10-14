@@ -1,7 +1,7 @@
 # Offdev/Csv
 
 [![Latest Stable Version](https://img.shields.io/packagist/vpre/offdev/csv.svg?style=flat-square)](https://packagist.org/packages/offdev/csv)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.1-8892BF.svg?style=flat-square)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg?style=flat-square)](https://php.net/)
 [![Build Status](https://img.shields.io/travis/offdev/csv/master.svg?style=flat-square)](https://travis-ci.org/offdev/csv)
 [![License](https://img.shields.io/github/license/offdev/csv.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 

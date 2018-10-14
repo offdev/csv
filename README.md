@@ -22,8 +22,6 @@ In order to feed the parser with data, you need to give it a stream. A stream ca
 
 ##### Using resources
 ```php
-<?php
-
 use Offdev\Csv\Stream;
 
 $stream = Stream::factory(fopen('/path/to/file.csv', 'r'));
@@ -31,8 +29,6 @@ $stream = Stream::factory(fopen('/path/to/file.csv', 'r'));
 
 ##### Using strings
 ```php
-<?php
-
 use Offdev\Csv\Stream;
 
 $stream = Stream::factory('this string will be transformed to an in-memory stream');
@@ -41,8 +37,6 @@ Note: this method also works for any object which implements the ```__toString``
 
 ##### Using HTTP streams (see [PSR-7/Streams](https://www.php-fig.org/psr/psr-7/#13-streams))
 ```php
-<?php
-
 use GuzzleHttp\Client;
 use Offdev\Csv\Stream;
 
@@ -56,12 +50,8 @@ $stream = Stream::factory($response->getBody());
 ##### Basics
 Once the parser has a stream to work with, we can start using it:
 ```php
-<?php
-
 use Offdev\Csv\Parser;
-use Offdev\Csv\Stream;
 
-$stream = Stream::factory("header-column1,header-column2\nrow1-value1,row1-value2\nrow2-value1,row2-value2");
 $parser = new Parser($stream);
 do {
     $record = $parser->readLine();
@@ -80,12 +70,6 @@ row2-value2
 For convenience, the parser can also be used as an iterator:
 
 ```php
-<?php
-
-use Offdev\Csv\Parser;
-use Offdev\Csv\Stream;
-
-$stream = Stream::factory("header-column1,header-column2\nrow1-value1,row1-value2\nrow2-value1,row2-value2");
 $parser = new Parser($stream);
 foreach ($parser as $index => $record) {
     echo $record->get('header-column2').PHP_EOL;
@@ -98,12 +82,6 @@ This will produce the same output as the example above.
 
 The parser accepts a number of options. The parser accepts options in an array, which is passed a a second argument to the constructor:
 ```php
-<?php
-
-use Offdev\Csv\Parser;
-use Offdev\Csv\Stream;
-
-$stream = Stream::factory("header-column1;header-column2\nrow1-value1;row1-value2\nrow2-value1;row2-value2");
 $parser = new Parser($stream, [
     Parser::OPTION_DELIMITER => ';'
 ]);
@@ -128,8 +106,6 @@ If a validator was assigned to the parser, valid and invalid records will be pas
 Example processor:
 
 ```php
-<?php
-
 namespace MyCompany\ProjectX\Processors;
 
 use Offdev\Csv\Item;
@@ -158,8 +134,6 @@ class MyProcessor implements ProcessorInterface
 Usage:
 
 ```php
-<?php
-
 use MyCompany\ProjectX\Processors\MyProcessor;
 use Offdev\Csv\Parser;
 use Offdev\Csv\Stream;
@@ -189,8 +163,6 @@ Now, most of the times, we want to make sure the data contained in the CSV is in
 Usage:
 
 ```php
-<?php
-
 use Offdev\Csv\Parser;
 use Offdev\Csv\Stream;
 use Offdev\Csv\Validator;

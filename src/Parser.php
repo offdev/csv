@@ -269,8 +269,8 @@ class Parser implements ParserInterface
             if ($this->validator->isValid($record)) {
                 $this->parseSuccess($record);
             } else {
-                $this->parseFailed($record);
                 $record->setIsValid(false);
+                $this->parseFailed($record);
             }
         } else {
             $this->parseSuccess($record);

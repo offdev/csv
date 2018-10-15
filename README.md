@@ -82,7 +82,7 @@ use Offdev\Csv\Parser;
 $parser = new Parser($stream);
 do {
     $record = $parser->readLine();
-    echo $record->get('header-column2').PHP_EOL;
+    echo $record ? $record->get('header-column2').PHP_EOL : '';
 } while (!$parser->eof());
 ```
 

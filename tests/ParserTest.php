@@ -173,7 +173,7 @@ final class ParserTest extends TestCase
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Invalid item count in stream!
+     * @expectedExceptionMessage Invalid record found in stream!
      */
     public function testThrowsOnFirstInvalidLine()
     {

@@ -30,7 +30,7 @@ final class StreamTest extends TestCase
     public function testFactoryWorksWithResource(): void
     {
         $stream = stream(fopen(__DIR__ . '/data/samples.csv', 'r'));
-        $this->assertEquals(225, strlen((string)$stream));
+        $this->assertEquals(229, strlen((string)$stream));
     }
 
     public function testFactoryWorksWithStreamInterface(): void

@@ -170,15 +170,27 @@ class Parser implements ParserInterface
      */
     public function readLine()
     {
-        if ($this->hasHeader && empty($this->header)) {
+        $this->parseHeader();
+        do {
             $line = $this->readLineFromBuffer();
-            if (empty($line)) {
-                return $this->readLine();
-            }
+        } while (empty($line) && !$this->eof());
+        return $this->parseLine($line);
+    }
+
+    /**
+     * Check for a header
+     *
+     * Searches for a header, ignoring any blank lines.
+     */
+    private function parseHeader()
+    {
+        if ($this->hasHeader && empty($this->header)) {
+            do {
+                $line = $this->readLineFromBuffer();
+            } while (empty($line) && !$this->eof());
             $header = explode($this->delimiter, $line);
             $this->header = $header;
         }
-        return $this->parseLine($this->readLineFromBuffer());
     }
 
     /**

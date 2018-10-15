@@ -32,5 +32,11 @@
         "psr-4": {
             "Offdev\\Tests\\": "tests/"
         }
-    }
+    },
+    "scripts": {
+    "phpunit": "./vendor/bin/phpunit",
+    "codesniffer": "./vendor/bin/phpcs --colors --standard=PSR2 -v src/ tests/",
+    "infection": "./vendor/bin/infection",
+    "test": ["@codesniffer", "@phpunit","@infection"]
+  }
 }

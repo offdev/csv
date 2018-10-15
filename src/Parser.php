@@ -59,7 +59,7 @@ class Parser implements ParserInterface
     private $iteratorIndex = 0;
 
     /**
-     * Wraps around a stream, and acceps options
+     * Wraps around a stream, and accepts options
      *
      * @param StreamInterface $stream
      * @param array $options

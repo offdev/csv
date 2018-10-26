@@ -80,10 +80,10 @@ Once the parser has a stream to work with, we can start using it:
 use Offdev\Csv\Parser;
 
 $parser = new Parser($stream);
-do {
+while (!$parser->eof()) {
     $record = $parser->readLine();
-    echo $record ? $record->get('header-column2').PHP_EOL : '';
-} while (!$parser->eof());
+    echo $record->get('header-column2').PHP_EOL;
+}
 ```
 
 The example above produces following output:

@@ -4,12 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixes
+- Small documentation issues
+
 ## [1.2.0] - 2019-01-24
 ### Added
 - Possibility to define string delimiters
 - Possibility to define the escape character
 
-# Fixes
+### Fixes
 - Parsing strings enclosed in single or double quotes
 - Issue with Iterator implementation, which sometimes ignored the last line in a csv
 
@@ -33,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.0.0] - 2018-10-14
 Initial release
 
+[Unreleased]: https://github.com/offdev/csv/compare/1.2.0...master
 [1.2.0]: https://github.com/offdev/csv/compare/1.1.1...1.2.0
 [1.1.1]: https://github.com/offdev/csv/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/offdev/csv/compare/1.0.1...1.1.0

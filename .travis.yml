@@ -12,3 +12,8 @@ script:
 - ./vendor/bin/phpcs --colors --standard=PSR2 -v src/ tests/
 - ./vendor/bin/phpunit --configuration phpunit.xml
 - ./vendor/bin/infection
+
+# Mutation testing key
+env:
+  global:
+    secure: DaV7b0lmNlEaz/BKJUjSiRL1qrPFUyovQ9EvPdBU0O4eZ++J1CZ7rYoZqBLdyXNIJKlM/+HOB8Sw9QgGvckyejs0tNUAjdci5IOrANlrWSjJ9OmA1NsPqvRRrbYsbBgz4miAXLPf2TjYQgPkmKGAjO+xJ1CO1nK0hrKITgFBNvTU5B8q1za8mY/MyBusyMsLW329wFa+kjy8GqG56yyqZhGLM7VsI5d5NtTjjBwXPXJWIJFoTLi/pX1l9O/wD0qZWeyfjgb6/zETGJsTCSU1b3ueKGNvWsPhVoyBFEy+ksXiV/lRGAClTQYK5q0DIREcLT/nXzyJTGKnq39DiggSkTGz5LqxbRzkv2oJEiXFB7tRsXJKHM4w0qoHYLURaoau2Nn9kHslkiDhNIeKpw2T1alZQsNspSxFgg8AvkIjMyFXqbgRPtn0V6hh9+CqSnmWJp9KR/XgA6N13VlRY1wLf1U97bdDjTrzv6ZOfK/6PXOna3381OzrbOG8uZd9cR+irqVPfe/imS2axFunAigEfRXQ5FQKKku8CHzz6wze2wrW/bZHZS2bK3NzHDWQCk+qiSn0oqRcUejVGPYNuwul49mOvwC6wn1mAkilJ4gWtbZ9YqWxBlHOm153cL0sqZVORhk4XryTXo/XZdbNh47dgjn44xGt0hq9xAO+62sOjIA=

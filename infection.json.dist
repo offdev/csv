@@ -12,5 +12,5 @@
       "branch": "master"
     }
   },
-  "timeout": 10
+  "timeout": 2
 }

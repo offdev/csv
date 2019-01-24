@@ -260,4 +260,24 @@ final class ParserTest extends TestCase
         $this->assertFalse($result->get(1)->isValid());
         $this->assertTrue($result->get(2)->isValid());
     }
+
+    public function testParserUsesDelimiterForStrings()
+    {
+        $stream = stream(__DIR__.'/data/yet-another-samples.csv');
+        $parser = new Parser($stream, [Parser::OPTION_THROWS => false]);
+        $result = new Collection();
+        foreach ($parser as $index => $line) {
+            $result[$index] = $line;
+        }
+        $this->assertEquals(2, $result->count());
+        $this->assertInstanceOf(Item::class, $result->get(0));
+        $this->assertInstanceOf(Item::class, $result->get(1));
+
+        $this->assertEquals('row-1, "column-1"', $result->get(0)->get('column1'));
+        $this->assertEquals('row-1, "column-2"', $result->get(0)->get('column2'));
+        $this->assertEquals('row-1, "column-3"', $result->get(0)->get('column3'));
+        $this->assertEquals('row-2, "column-1"', $result->get(1)->get('column1'));
+        $this->assertEquals('row-2, "column-2"', $result->get(1)->get('column2'));
+        $this->assertEquals('row-2, "column-3"', $result->get(1)->get('column3'));
+    }
 }

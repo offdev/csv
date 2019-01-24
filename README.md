@@ -116,13 +116,15 @@ $parser = new Parser($stream, [
 
 Full list of options:
 
-| Option                         | Value Type | Default Value | Description                                                                                                           |
-|--------------------------------|------------|:-------------:|-----------------------------------------------------------------------------------------------------------------------|
-| ```Parser::OPTION_BUFSIZE```   | \<integer> | ```1024```    | Defines the size of the buffer which is used when reading streams.                                                    |
-| ```Parser::OPTION_HEADER```    | \<boolean> | ```true```    | Tells the parser if the CSV contains a header. This header will be used as keys for the records read from the stream. | 
-| ```Parser::OPTION_DELIMITER``` | \<string>  | ```','```     | Defines the delimiter used in the CSV file to mark columns.                                                           | 
-| ```Parser::OPTION_EOL```       | \<string>  | ```"\n"```    | Defines the line ending used in the CSV file. Unix files mostly use ```\n``` while windows mostly uses ```\r\n```.    | 
-| ```Parser::OPTION_THROWS```    | \<boolean> | ```true```    | Tells the parser to throw an exception when an invalid records was found in the stream.                               | 
+| Option                                | Value Type | Default Value | Description                                                                                                           |
+|---------------------------------------|------------|:-------------:|-----------------------------------------------------------------------------------------------------------------------|
+| ```Parser::OPTION_BUFSIZE```          | \<integer> | ```1024```    | Defines the size of the buffer which is used when reading streams.                                                    |
+| ```Parser::OPTION_HEADER```           | \<boolean> | ```true```    | Tells the parser if the CSV contains a header. This header will be used as keys for the records read from the stream. | 
+| ```Parser::OPTION_DELIMITER```        | \<string>  | ```','```     | Defines the delimiter used in the CSV file to mark columns.                                                           | 
+| ```Parser::OPTION_STRING_ENCLOSURE``` | \<string>  | ```'"'```     | Defines the delimiter used for strings.                                                                               | 
+| ```Parser::OPTION_ESCAPE_CHAR```      | \<string>  | ```'\\'```    | Defines the character used to escape other control characters.                                                        | 
+| ```Parser::OPTION_EOL```              | \<string>  | ```"\n"```    | Defines the line ending used in the CSV file. Unix files mostly use ```\n``` while windows mostly uses ```\r\n```.    | 
+| ```Parser::OPTION_THROWS```           | \<boolean> | ```true```    | Tells the parser to throw an exception when an invalid records was found in the stream.                               | 
 
 ## Processor
 

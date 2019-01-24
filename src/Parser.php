@@ -37,6 +37,12 @@ class Parser implements ParserInterface
     /** @var int */
     private $bufferSize;
 
+    /** @var string */
+    private $stringEnclosure = '"';
+
+    /** @var string */
+    private $escapeChar = '\\';
+
     /** @var Validator */
     private $validator;
 
@@ -119,7 +125,7 @@ class Parser implements ParserInterface
      */
     public function current()
     {
-        if (!$this->currentLine && !$this->eof()) {
+        if (!$this->currentLine) {
             $this->currentLine = $this->readLine();
         }
         return $this->currentLine;
@@ -157,7 +163,7 @@ class Parser implements ParserInterface
      */
     public function valid()
     {
-        return !$this->eof();
+        return !$this->eof() || ($this->currentLine instanceof Item);
     }
 
     /**
@@ -302,7 +308,11 @@ class Parser implements ParserInterface
         if (!is_string($line)) {
             return $line;
         }
-        $result = explode($this->delimiter, $line);
+
+        $result = str_getcsv($line, $this->delimiter, $this->stringEnclosure, $this->escapeChar);
+        foreach ($result as $i => $r) {
+            $result[$i] = $this->unescape($r);
+        }
         if ($this->hasHeader) {
             if (count($this->header) != count($result)) {
                 if ($this->throws) {
@@ -316,6 +326,16 @@ class Parser implements ParserInterface
         }
 
         return $record;
+    }
+
+    /**
+     * @param string $str
+     * @return null|string
+     */
+    private function unescape(?string $str = null): ?string
+    {
+        $escapeSequence = $this->escapeChar.$this->stringEnclosure;
+        return str_replace($escapeSequence, $this->stringEnclosure, $str);
     }
 
     /**
@@ -357,6 +377,8 @@ class Parser implements ParserInterface
     {
         $this->bufferSize = $this->arrayGet($options, 'integer', self::OPTION_BUFSIZE, 1024);
         $this->delimiter = $this->arrayGet($options, 'string', self::OPTION_DELIMITER, ',');
+        $this->stringEnclosure = $this->arrayGet($options, 'string', self::OPTION_STRING_ENCLOSURE, '"');
+        $this->escapeChar = $this->arrayGet($options, 'string', self::OPTION_ESCAPE_CHAR, '\\');
         $this->lineEnding = $this->arrayGet($options, 'string', self::OPTION_EOL, "\n");
         $this->hasHeader = $this->arrayGet($options, 'boolean', self::OPTION_HEADER, true);
         $this->throws = $this->arrayGet($options, 'boolean', self::OPTION_THROWS, true);

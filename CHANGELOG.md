@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2019-01-24
+### Added
+- Possibility to define string delimiters
+- Possibility to define the escape character
+
+# Fixes
+- Parsing strings enclosed in single or double quotes
+- Issue with Iterator implementation, which sometimes ignored the last line in a csv
+
+## [1.1.1] - 2018-10-15
+### Fixes
+- Errors in ```README.md```
+- Typos in PHP docs
+- Bug where invalid CSV item would be marked as valid
+- Bug with multiple empty lines in stream
+
 ## [1.1.0] - 2018-10-15
 ### Added
 - ```ParserInterface``` now implements the ```Iterator``` interface, for easy iterations over a CSV stream
@@ -17,6 +33,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.0.0] - 2018-10-14
 Initial release
 
+[1.2.0]: https://github.com/offdev/csv/compare/1.1.1...1.2.0
+[1.1.1]: https://github.com/offdev/csv/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/offdev/csv/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/offdev/csv/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/offdev/csv/tree/1.0.0

@@ -35,6 +35,16 @@ interface ParserInterface extends \Iterator
     const OPTION_DELIMITER = 'column_delimiter';
 
     /**
+     * Defines whether strings are used with single or double quotes
+     */
+    const OPTION_STRING_ENCLOSURE = '"';
+
+    /**
+     * Defines the escape character
+     */
+    const OPTION_ESCAPE_CHAR = '\\';
+
+    /**
      * Controls the line ending character.
      */
     const OPTION_EOL = 'end_of_line';

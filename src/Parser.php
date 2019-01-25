@@ -43,7 +43,7 @@ class Parser implements ParserInterface
     /** @var string */
     private $escapeChar = '\\';
 
-    /** @var Validator */
+    /** @var Validator|null */
     private $validator;
 
     /** @var ProcessorInterface */
@@ -120,7 +120,7 @@ class Parser implements ParserInterface
     /**
      * Return the current element
      * @link https://php.net/manual/en/iterator.current.php
-     * @return Item Can return any type.
+     * @return Item|false
      * @since 5.0.0
      */
     public function current()
@@ -273,7 +273,7 @@ class Parser implements ParserInterface
      * Transforms a string to a collection, using headers if available. The collection
      * is then passed to the underlying processor for further manipulation.
      *
-     * @param string $line
+     * @param string|false $line
      * @return Item|false
      */
     private function parseLine($line)

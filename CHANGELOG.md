@@ -6,10 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- PHPStan (static code analysis)
 - Mutation score badge
 
 ### Fixes
 - Small documentation issues
+- DocBlocks for several function parameters and private object properties
+- stream helper function, when trying to open non-readable files
+- Parsing of files in test cases (changed do/while to while)
 
 ## [1.2.0] - 2019-01-24
 ### Added

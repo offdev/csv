@@ -15,12 +15,15 @@
 if (!function_exists('stream')) {
     /**
      * @param object|resource|string $input
-     * @return \Offdev\Csv\Stream
+     * @return \Psr\Http\Message\StreamInterface
      */
     function stream($input = '')
     {
         if (is_string($input) && file_exists($input) && is_readable($input)) {
-            return \Offdev\Csv\Stream::factory(fopen($input, 'r'));
+            if ($fp = fopen($input, 'r')) {
+                return \Offdev\Csv\Stream::factory($fp);
+            }
+            throw new \RuntimeException("File not readable: {$input}");
         }
         return \Offdev\Csv\Stream::factory($input);
     }

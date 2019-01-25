@@ -43,8 +43,7 @@ final class StreamTest extends TestCase
     public function testFactoryWorksWithStringableObject(): void
     {
         $obj = new class {
-            public function __toString()
-            {
+            public function __toString() {
                 return 'magic objects are fun!';
             }
         };
@@ -83,7 +82,9 @@ final class StreamTest extends TestCase
     public function testDetachedStreamReturnsEmptryString(): void
     {
         $stream = stream('LOL');
-        $stream->__destruct();
+        if ($stream instanceof Stream) {
+            $stream->__destruct();
+        }
         $this->assertEquals('', (string)$stream);
     }
 
@@ -91,7 +92,7 @@ final class StreamTest extends TestCase
     {
         $stream = stream('LOL');
         $stream->close();
-        $this->assertNull($stream->getSize());
+        $this->assertEquals(0, $stream->getSize());
     }
 
     public function testStreamReturnsCorrectSize(): void
@@ -193,10 +194,10 @@ final class StreamTest extends TestCase
         $this->assertEquals(false, $stream->read(1));
     }
 
-    public function testReadOnNonReadableReturnsFalse(): void
+    public function testReadOnNonReadableReturnsEmptyString(): void
     {
         $stream = stream(fopen(__DIR__ . '/data/samples.csv', 'a'));
-        $this->assertFalse($stream->read(1));
+        $this->assertEmpty($stream->read(1));
     }
 
     public function testDetachedStreamNotReadable(): void

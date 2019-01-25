@@ -19,7 +19,7 @@ use Psr\Http\Message\StreamInterface;
  */
 class Stream implements StreamInterface
 {
-    /** @var resource */
+    /** @var resource|null */
     private $stream;
 
     /** @var array */
@@ -59,7 +59,7 @@ class Stream implements StreamInterface
 
     /**
      * @param string|resource|object $resource
-     * @return Stream
+     * @return StreamInterface
      * @throws \InvalidArgumentException
      */
     public static function factory($resource = '')
@@ -171,7 +171,8 @@ class Stream implements StreamInterface
     {
         $this->meta = [];
         $result = $this->stream;
-        $this->stream = $this->size = null;
+        $this->stream = null;
+        $this->size = 0;
         $this->isReadable = $this->isWritable = $this->isSeekable = false;
         return $result;
     }
@@ -183,10 +184,7 @@ class Stream implements StreamInterface
      */
     public function getSize()
     {
-        if (!is_null($this->size)) {
-            return $this->size;
-        }
-        return null;
+        return $this->size;
     }
 
     /**
@@ -304,7 +302,7 @@ class Stream implements StreamInterface
     public function read($length)
     {
         if (!$this->isReadable) {
-            return false;
+            return '';
         }
         return fread($this->stream, $length);
     }
@@ -338,7 +336,7 @@ class Stream implements StreamInterface
     public function getMetadata($key = null)
     {
         return !is_null($key)
-            ? (isset($this->meta[$key]) ? $this->meta[$key] : null)
+            ? ($this->meta[$key] ?? null)
             : $this->meta;
     }
 }

@@ -31,11 +31,10 @@ final class ParserTest extends TestCase
             Parser::OPTION_THROWS => false,
             Parser::OPTION_BUFSIZE => 225
         ]);
-        /** @var Item[] $result */
         $result = [];
-        do {
+        while (!$parser->eof()) {
             $result[] = $parser->readLine();
-        } while (!$parser->eof());
+        }
 
         $this->assertEquals('invalid', $result[3]->get('column1'));
     }
@@ -49,9 +48,9 @@ final class ParserTest extends TestCase
         $stream = stream(__DIR__ . '/data/samples.csv');
         $parser = new Parser($stream);
         $result = [];
-        do {
+        while (!$parser->eof()) {
             $result[] = $parser->readLine();
-        } while (!$parser->eof());
+        }
     }
 
     /**

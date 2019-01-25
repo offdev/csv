@@ -43,7 +43,8 @@ final class StreamTest extends TestCase
     public function testFactoryWorksWithStringableObject(): void
     {
         $obj = new class {
-            public function __toString() {
+            public function __toString()
+            {
                 return 'magic objects are fun!';
             }
         };

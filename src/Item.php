@@ -22,7 +22,7 @@ use Illuminate\Support\Collection;
  *
  * @package Offdev\Csv
  */
-class Item extends Collection
+final class Item extends Collection
 {
     /** @var bool */
     private $isValid = true;

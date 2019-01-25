@@ -17,7 +17,7 @@ use Psr\Http\Message\StreamInterface;
  * Class Stream
  * @package Offdev\CsvParser
  */
-class Stream implements StreamInterface
+final class Stream implements StreamInterface
 {
     /** @var resource|null */
     private $stream;

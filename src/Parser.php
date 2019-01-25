@@ -20,7 +20,7 @@ use Psr\Http\Message\StreamInterface;
  *
  * @package Offdev\CsvParser
  */
-class Parser implements ParserInterface
+final class Parser implements ParserInterface
 {
     /** @var string */
     private $delimiter = ',';

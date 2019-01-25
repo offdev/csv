@@ -17,7 +17,7 @@ use Psr\Http\Message\StreamInterface;
  * Class InvalidStream
  * @package Offdev\Tests
  */
-class InvalidStream implements StreamInterface
+final class InvalidStream implements StreamInterface
 {
     /**
      * Reads all data from the stream into a string, from the beginning to end.

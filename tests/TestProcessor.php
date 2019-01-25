@@ -20,7 +20,7 @@ use Offdev\Csv\ProcessorInterface;
  * Class TestProcessor
  * @package Offdev\Tests
  */
-class TestProcessor implements ProcessorInterface
+final class TestProcessor implements ProcessorInterface
 {
     /** @var array */
     private $validRecords = [];

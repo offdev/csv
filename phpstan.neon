@@ -7,3 +7,29 @@ parameters:
         -
             message: '/Parameter #1 $input of function stream expects object|resource|string, int given./' # explicit test case
             path: %currentWorkingDirectory%/tests/StreamTest.php
+    allowAbstractClasses: true
+    classesNotRequiredToBeAbstractOrFinal: []
+    classesAllowedToBeExtended:
+        - Illuminate\Support\Collection
+
+rules:
+    - Localheinz\PHPStan\Rules\Closures\NoNullableReturnTypeDeclarationRule
+    - Localheinz\PHPStan\Rules\Closures\NoParameterWithNullableTypeDeclarationRule
+    - Localheinz\PHPStan\Rules\Functions\NoNullableReturnTypeDeclarationRule
+    - Localheinz\PHPStan\Rules\Functions\NoParameterWithNullableTypeDeclarationRule
+    - Localheinz\PHPStan\Rules\Functions\NoParameterWithNullDefaultValueRule
+
+services:
+    -
+        class: Localheinz\PHPStan\Rules\Classes\FinalRule
+        arguments:
+            allowAbstractClasses: %allowAbstractClasses%
+            classesNotRequiredToBeAbstractOrFinal: %classesNotRequiredToBeAbstractOrFinal%
+        tags:
+            - phpstan.rules.rule
+    -
+        class: Localheinz\PHPStan\Rules\Classes\NoExtendsRule
+        arguments:
+            classesAllowedToBeExtended: %classesAllowedToBeExtended%
+        tags:
+            - phpstan.rules.rule

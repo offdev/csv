@@ -18,7 +18,7 @@ use Illuminate\Validation\Validator as ActualValidator;
  * Class Validator
  * @package Offdev\CsvParser
  */
-class Validator
+final class Validator
 {
     /** @var array */
     private $rules = [];

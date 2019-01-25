@@ -10,7 +10,7 @@ install:
 # Execute unit tests
 script:
 - ./vendor/bin/phpcs --colors --standard=PSR2 -v src/ tests/
-- ./vendor/bin/phpstan
+- ./vendor/bin/phpstan analyse
 - ./vendor/bin/phpunit --configuration phpunit.xml
 - ./vendor/bin/infection
 

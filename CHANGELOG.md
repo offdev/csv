@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - DocBlocks for several function parameters and private object properties
 - stream helper function, when trying to open non-readable files
 - Parsing of files in test cases (changed do/while to while)
+- Index not resetting when iterating multiple times over the same parser
+- Headers being parsed as values when iterating multiple times over the same parser
 
 ## [1.2.0] - 2019-01-24
 ### Added

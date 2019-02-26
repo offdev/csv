@@ -279,4 +279,26 @@ final class ParserTest extends TestCase
         $this->assertEquals('row-2, "column-2"', $result->get(1)->get('column2'));
         $this->assertEquals('row-2, "column-3"', $result->get(1)->get('column3'));
     }
+
+    public function testParserReadsLastLine()
+    {
+        $parser = new Parser(stream("header\nrow 1\nrow 2\n"));
+
+        $result = [];
+        $lastIndex = 0;
+        foreach ($parser as $index => $row) {
+            $result[] = $row['header'];
+            $lastIndex = $index;
+        }
+
+        $this->assertCount(2, $result);
+        $this->assertEquals(1, $lastIndex);
+        $lastIndex = 0;
+        foreach ($parser as $index => $row) {
+            $result[] = $row['header'];
+            $lastIndex = $index;
+        }
+        $this->assertCount(4, $result);
+        $this->assertEquals(1, $lastIndex);
+    }
 }

@@ -114,6 +114,8 @@ final class Parser implements ParserInterface
     {
         $this->stream->rewind();
         $this->currentLine = false;
+        $this->iteratorIndex = 0;
+        $this->header = [];
         return $this;
     }
 

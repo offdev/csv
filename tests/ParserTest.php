@@ -39,6 +39,22 @@ final class ParserTest extends TestCase
         $this->assertEquals('invalid', $result[3]->get('column1'));
     }
 
+    public function testReadLineOnNonUTF8Works(): void
+    {
+        $stream = stream(__DIR__ . '/data/samples-ISO-8859-15-CRLF.csv');
+        $parser = new Parser($stream, [
+            Parser::OPTION_THROWS => false,
+            Parser::OPTION_EOL=> "\r\n",
+            Parser::OPTION_BUFSIZE => 225
+        ]);
+        $result = [];
+        while (!$parser->eof()) {
+            $result[] = $parser->readLine();
+        }
+
+        $this->assertEquals('invalid', $result[3]->get('column1'));
+    }
+
     /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Invalid item count in stream!

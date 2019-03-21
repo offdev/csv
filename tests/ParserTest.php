@@ -36,7 +36,7 @@ final class ParserTest extends TestCase
             $result[] = $parser->readLine();
         }
 
-        $this->assertEquals('invalid', $result[3]->get('column1'));
+        $this->assertEquals('𠜎𠜱𠝹𠱓𠱸𠲖𠳏𠳕𩶘', $result[3]->get('column1'));
     }
 
     public function testReadLineOnNonUTF8Works(): void
@@ -112,7 +112,6 @@ final class ParserTest extends TestCase
         $stream = stream(__DIR__ . '/data/samples.csv');
         $parser = new Parser($stream, [
             Parser::OPTION_THROWS => false,
-            Parser::OPTION_BUFSIZE => 45
         ]);
         $parser->setProcessor($processor);
         $parser->setValidator($validator);
@@ -129,7 +128,6 @@ final class ParserTest extends TestCase
         $stream = stream(__DIR__ . '/data/samples.csv');
         $parser = new Parser($stream, [
             Parser::OPTION_THROWS => false,
-            Parser::OPTION_BUFSIZE => 45
         ]);
         $parser->setProcessor($processor);
         $parser->run();

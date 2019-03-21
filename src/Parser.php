@@ -258,7 +258,7 @@ final class Parser implements ParserInterface
         $pos = strpos($this->buffer, $this->lineEnding);
         if ($pos !== false || (!empty($this->buffer) && $this->stream->eof())) {
             $line = ($pos !== false) ? substr($this->buffer, 0, $pos) : $this->buffer;
-            $this->buffer = ($pos !== false) ? substr($this->buffer, $pos+strlen($this->delimiter)) : '';
+            $this->buffer = ($pos !== false) ? substr($this->buffer, $pos+strlen($this->lineEnding)) : '';
             return $line;
         }
 

@@ -216,4 +216,9 @@ final class StreamTest extends TestCase
         $bytes = $stream->write('');
         $this->assertEquals(0, $bytes);
     }
+
+    public function testUnreadableThrows()
+    {
+        $stream = stream('/etc/sudoers');
+    }
 }

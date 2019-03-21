@@ -20,10 +20,7 @@ if (!function_exists('stream')) {
     function stream($input = '')
     {
         if (is_string($input) && file_exists($input) && is_readable($input)) {
-            if ($fp = fopen($input, 'r')) {
-                return \Offdev\Csv\Stream::factory($fp);
-            }
-            throw new \RuntimeException("File not readable: {$input}");
+            return \Offdev\Csv\Stream::factory(fopen($input, 'r'));
         }
         return \Offdev\Csv\Stream::factory($input);
     }

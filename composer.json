@@ -36,10 +36,10 @@
         }
     },
     "scripts": {
-    "phpunit": "./vendor/bin/phpunit",
-    "phpstan": "./vendor/bin/phpstan analyze",
-    "codesniffer": "./vendor/bin/phpcs --colors --standard=PSR2 -v src/ tests/",
-    "infection": "./vendor/bin/infection",
-    "test": ["@codesniffer", "@phpstan", "@phpunit","@infection"]
-  }
+        "phpunit": "./vendor/bin/phpunit",
+        "phpstan": "./vendor/bin/phpstan analyze",
+        "codesniffer": "./vendor/bin/phpcs --colors --standard=PSR2 -v src/ tests/",
+        "infection": "./vendor/bin/infection",
+        "test": ["@codesniffer", "@phpstan", "@phpunit","@infection"]
+    }
 }
